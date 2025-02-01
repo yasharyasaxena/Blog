@@ -2,19 +2,36 @@ import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { register } from "../api";
 import { FaExclamationTriangle } from "react-icons/fa";
+import { FaRegEye } from "react-icons/fa";
+import { FaRegEyeSlash } from "react-icons/fa";
 
 export default function Register() {
   const [error, setError] = useState(null);
+  const [visibility, setVisibility] = useState(false);
   const navigate = useNavigate();
+
   async function action(formdata) {
     const fullName = formdata.get("fullname");
     const email = formdata.get("email");
     const password = formdata.get("password");
-    try {
-      const data = await register({ fullName, email, password });
-      navigate("/signIn?registered=true");
-    } catch (error) {
-      setError(error);
+    const confirmPassword = formdata.get("confirmPassword");
+    if (!fullName || !email || !password || !confirmPassword) {
+      setError({
+        message: "All fields are required",
+      });
+    } else if (password !== confirmPassword) {
+      setError({
+        message: "Passwords do not match",
+      });
+    } else {
+      try {
+        const data = await register({ fullName, email, password });
+        navigate("/signIn?registered=true");
+      } catch (error) {
+        setError({
+          ...error,
+        });
+      }
     }
   }
   return (
@@ -29,7 +46,7 @@ export default function Register() {
             <FaExclamationTriangle />
             {`${error.message} !`}
             <br />
-            {`Please Sign In or Use another email`}
+            {error.status == 409 ? `Please Sign In or Use another email` : ""}
           </div>
         )}
         <form action={action} className="space-y-4">
@@ -56,20 +73,35 @@ export default function Register() {
           <div className="flex w-80 py-3 px-4 items-center gap-2 rounded-xl border border-black">
             <div className="flex flex-col items-start gap-6">
               <input
-                type="password"
+                type={visibility ? "text" : "password"}
                 name="password"
                 className="text-xl font-normal border-none focus:outline-none"
                 placeholder="Password"
               />
             </div>
+            <div className="my-auto ml-auto text-2xl">
+              {visibility ? (
+                <FaRegEye onClick={() => setVisibility(false)} />
+              ) : (
+                <FaRegEyeSlash onClick={() => setVisibility(true)} />
+              )}
+            </div>
           </div>
           <div className="flex w-80 py-3 px-4 items-center gap-2 rounded-xl border border-black">
             <div className="flex flex-col items-start gap-6">
               <input
-                type="password"
+                type={visibility ? "text" : "password"}
+                name="confirmPassword"
                 className="text-xl font-normal border-none focus:outline-none"
                 placeholder="Confirm Password"
               />
+            </div>
+            <div className="my-auto ml-auto text-2xl">
+              {visibility ? (
+                <FaRegEye onClick={() => setVisibility(false)} />
+              ) : (
+                <FaRegEyeSlash onClick={() => setVisibility(true)} />
+              )}
             </div>
           </div>
           <button className="flex w-80 py-3 px-4 items-center justify-center gap-2 rounded-xl bg-custom-gradient text-white">
