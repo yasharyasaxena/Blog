@@ -11,11 +11,7 @@ const userSchema = new mongoose.Schema(
             required: true,
             unique: true
         },
-        hash: {
-            type: String,
-            required: true
-        },
-        salt: {
+        password: {
             type: String,
             required: true
         },
