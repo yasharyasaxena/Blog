@@ -56,7 +56,7 @@ export default function SignIn() {
   return token ? (
     <Navigate to="/host" />
   ) : (
-    <div className="flex w-fit py-20 px-10 mx-auto mb-10 h-fit flex-col items-center flex-shrink-0 border rounded-3xl">
+    <div className="flex w-fit py-20 px-5 md:px-10 mx-auto mb-10 h-fit flex-col items-center flex-shrink-0 border rounded-3xl">
       <div className="flex flex-col items-start gap-3">
         <div className="flex flex-col items-start">
           <h1 className="font-semibold text-4xl text-black">Sign In</h1>
