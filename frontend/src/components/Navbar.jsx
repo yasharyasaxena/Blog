@@ -14,6 +14,11 @@ export default function Navbar() {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const handleSignOut = () => {
+    localStorage.removeItem("auth");
+    window.location.reload();
+  };
+
   return (
     <nav className="flex top-3 sticky m-5 max-h-4 border rounded-full shadow-slate-300 shadow-lg items-center p-5 bg-white text-black">
       <NavLink to="/">
@@ -93,6 +98,14 @@ export default function Navbar() {
                   >
                     Dashboard
                   </NavLink>
+                </li>
+                <li>
+                  <button
+                    onClick={handleSignOut}
+                    className="block text-start w-full px-4 py-2 text-black hover:bg-red-500 hover:text-white"
+                  >
+                    Sign Out
+                  </button>
                 </li>
               </ul>
             </div>
