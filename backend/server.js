@@ -5,6 +5,8 @@ const express = require('express')
 const { dbConnect } = require('./connections/connection')
 const { userSchema } = require('./models/user')
 const { blogSchema } = require('./models/blog')
+const { validPassword, genPassword } = require('./utils/utils');
+const { genToken } = require('./utils/utils');
 
 dbConnect(process.env.MONGO_URL)
 
@@ -26,16 +28,13 @@ app
         const fullName = req.body.fullName
         const email = req.body.email
         const password = req.body.password
-
-        // return res.status(200).json({ fullName, email, password })
-
         const user = await Users.findOne({ email: email })
 
         if (!user) {
             await Users.create({
                 fullName,
                 email,
-                password
+                ...genPassword(password)
             })
             return res.status(200).json({
                 message: 'User created successfully',
@@ -48,10 +47,31 @@ app
             })
         }
     })
-// .get((req, res) => {
-//     res.send('Register')
-// })
 
+app
+    .route("/login")
+    .post(async (req, res) => {
+        const email = req.body.email
+        const password = req.body.password
+        const user = await Users.findOne({ email: email })
+        if (!user) {
+            return res.status(404).json({
+                message: 'User not found'
+            })
+        }
+        else if (!validPassword(password, user.hash, user.salt)) {
+            return res.status(401).json({
+                message: 'Incorrect password'
+            })
+        }
+        else if (validPassword(password, user.hash, user.salt)) {
+            return res.status(200).json({
+                message: 'Login successful',
+                token: genToken({ id: user._id }, process.env.SECRET_KEY),
+                name: user.fullName,
+            })
+        }
+    })
 
 // const sessionStore = MongoStore.create({
 //     mongoUrl: process.env.MONGO_URL,
@@ -59,14 +79,6 @@ app
 // })
 
 
-// async function passwordVerify(user, password) {
-//     if (await user.password == password) {
-//         return true;
-//     }
-//     else {
-//         return false;
-//     }
-// }
 
 // const app = express();
 // app.use(express.urlencoded({ extended: false }))

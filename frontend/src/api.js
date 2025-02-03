@@ -1,5 +1,5 @@
 export async function register(data) {
-    const response = await fetch("http://localhost:8000/register", {
+    const response = await fetch("http://localhost:3000/register", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -18,7 +18,7 @@ export async function register(data) {
 }
 
 export async function login(data) {
-    const response = await fetch("http://localhost:8000/login", {
+    const response = await fetch("http://localhost:3000/login", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -27,6 +27,7 @@ export async function login(data) {
     });
     let result = await response.json();
     if (!response.ok) {
+        console.log("hi")
         throw {
             status: response.status,
             statusText: response.statusText,

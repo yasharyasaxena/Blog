@@ -1,15 +1,61 @@
-import { useState } from "react";
-import { useSearchParams, NavLink } from "react-router-dom";
+import { useState, useContext } from "react";
+import {
+  useSearchParams,
+  NavLink,
+  useNavigate,
+  Navigate,
+} from "react-router-dom";
 import { TiTick } from "react-icons/ti";
+import { FaExclamationTriangle } from "react-icons/fa";
+import { login } from "../api";
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
+import { AuthContext } from "../App";
 
 export default function SignIn() {
-  const [searchParams] = useSearchParams();
   const [visibility, setVisibility] = useState(false);
+  const [error, setError] = useState(null);
+  const {
+    auth: { token },
+    setAuth,
+  } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const isRegistered = searchParams.get("registered");
 
-  return (
+  async function action(formdata) {
+    const email = formdata.get("email");
+    const password = formdata.get("password");
+    if (!email || !password) {
+      setError({
+        message: "All fields are required",
+      });
+    } else {
+      try {
+        const data = await login({ email, password });
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            token: data.token,
+            name: data.name,
+          })
+        );
+        setAuth({
+          token: data.token,
+          name: data.name,
+        });
+        navigate("/host");
+      } catch (e) {
+        setError({
+          ...e,
+        });
+      }
+    }
+  }
+
+  return token ? (
+    <Navigate to="/host" />
+  ) : (
     <div className="flex w-fit py-20 px-10 mx-auto mb-10 h-fit flex-col items-center flex-shrink-0 border rounded-3xl">
       <div className="flex flex-col items-start gap-3">
         <div className="flex flex-col items-start">
@@ -24,7 +70,13 @@ export default function SignIn() {
             {`Please Sign In`}
           </div>
         )}
-        <form className="space-y-4">
+        {error && (
+          <div className="flex w-80 py-3 px-4 items-center gap-2 rounded-xl border border-red-500 bg-red-100 text-red-500">
+            <FaExclamationTriangle />
+            {`${error.message} !`}
+          </div>
+        )}
+        <form action={action} className="space-y-4">
           <div className="flex w-80 py-3 px-4 items-center gap-2 rounded-xl border border-black">
             <div className="flex flex-col items-start gap-6">
               <input

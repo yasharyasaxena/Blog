@@ -27,9 +27,9 @@ export default function Register() {
       try {
         const data = await register({ fullName, email, password });
         navigate("/signIn?registered=true");
-      } catch (error) {
+      } catch (e) {
         setError({
-          ...error,
+          ...e,
         });
       }
     }
