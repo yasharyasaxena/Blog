@@ -44,7 +44,7 @@ export default function SignIn() {
           token: data.token,
           name: data.name,
         });
-        navigate("/host");
+        navigate("/dashboard");
       } catch (e) {
         setError({
           ...e,
@@ -54,7 +54,7 @@ export default function SignIn() {
   }
 
   return token ? (
-    <Navigate to="/host" />
+    <Navigate to="/dashboard" />
   ) : (
     <div className="flex w-fit py-20 px-5 md:px-10 mx-auto mb-10 h-fit flex-col items-center flex-shrink-0 border rounded-3xl">
       <div className="flex flex-col items-start gap-3">

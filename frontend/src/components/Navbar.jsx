@@ -5,7 +5,6 @@ import { CgProfile } from "react-icons/cg";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const {
     auth: { token, name },
   } = useContext(AuthContext);
