@@ -1,7 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { getTopBlogs } from "../api";
+import Blog from "../components/Blog";
 
 export default function Home() {
+  const [blogs, setBlogs] = useState([]);
+
+  useEffect(() => {
+    getTopBlogs().then((data) => {
+      setBlogs(data.topBlogs);
+    });
+  }, []);
+
+  const blogElements = blogs.map((blog) => (
+    <Blog
+      key={blog._id}
+      image={blog.banner}
+      title={blog.title}
+      author={blog.author.name}
+      views={blog.views}
+      id={blog._id}
+    />
+  ));
+
   return (
     <>
       <div className="m-10 flex flex-col text-center">
@@ -19,7 +40,11 @@ export default function Home() {
         <h1>Some popular Blogs</h1>
       </div>
       <div className="flex mx-10 mt-0 border-b border-black py-2">
-        <h1>Blogs here</h1>
+        {blogElements.length > 0 ? (
+          <div className="grid grid-cols-3 gap-4">{blogElements}</div>
+        ) : (
+          <p className="text-center mt-4">You have no blogs yet</p>
+        )}
       </div>
       <div className="m-10 mt-3 hover:underline hover:text-blue-400">
         <Link to="/blogs">More blogs on the Blogs Page</Link>
