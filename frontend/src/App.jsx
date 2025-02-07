@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import SignIn from "./pages/SignIn";
 import Editor from "./pages/Editor";
 import UserBlogs from "./pages/UserBlogs";
+import Blog from "./pages/Blog";
 
 export const AuthContext = createContext({});
 
@@ -26,6 +27,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="blogs" element={<Blogs />} />
+            <Route path="blog/:id" element={<Blog />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="register" element={<Register />} />
             <Route path="signIn" element={<SignIn />} />
