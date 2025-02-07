@@ -5,8 +5,7 @@ const express = require('express')
 const { dbConnect } = require('./connections/connection')
 const { userSchema } = require('./models/user')
 const { blogSchema } = require('./models/blog')
-const { validPassword, genPassword } = require('./utils/utils');
-const { genToken } = require('./utils/utils');
+const { validPassword, genPassword, genToken, JWTVerify } = require('./utils/utils');
 
 dbConnect(process.env.MONGO_URL)
 
@@ -19,7 +18,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 const corsOptions = {
-    origin: 'http://localhost:5175',
+    origin: 'http://localhost:5173',
 };
 app.use(cors(corsOptions));
 
@@ -83,7 +82,7 @@ app
     })
 
 app
-    .route("/blogs/:id")
+    .route("/blog/:id")
     .get(async (req, res) => {
         const blog = await Blogs.findById(req.params.id)
         return res.status(200).json({
@@ -102,10 +101,10 @@ app
 
 app
     .route("/dashboard")
-    .get(async (req, res) => {
-        const authorization = req.headers.authorization.split(' ')[1]
-        const decoded = jwt.verify(authorization, process.env.SECRET_KEY)
-        const topUserBlogs = await Blogs.findById(decoded.id).sort({ views: -1 }).limit(5)
+    .get(JWTVerify, async (req, res) => {
+        const topUserBlogs = await Blogs.find({
+            'author.id': req.user.id
+        }).sort({ views: -1 }).limit(5)
         return res.status(200).json({
             topUserBlogs: topUserBlogs
         })
@@ -113,12 +112,28 @@ app
 
 app
     .route("/blogs/user")
-    .get(async (req, res) => {
-        const authorization = req.headers.authorization.split(' ')[1]
-        const decoded = jwt.verify(authorization, process.env.SECRET_KEY)
-        const userBlogs = await Blogs.findById(decoded.id)
+    .get(JWTVerify, async (req, res) => {
+        const userBlogs = await Blogs.find({
+            'author.id': req.user.id
+        })
         return res.status(200).json({
             userBlogs: userBlogs
+        })
+    })
+
+app
+    .route("/create-blog")
+    .post(JWTVerify, async (req, res) => {
+        const blog = await Blogs.create({
+            ...req.body,
+            author: {
+                name: req.body.author,
+                id: req.user.id
+            }
+        })
+        return res.status(201).json({
+            message: 'Blog created successfully',
+            blog: blog._id
         })
     })
 

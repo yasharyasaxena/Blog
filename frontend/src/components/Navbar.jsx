@@ -19,7 +19,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="flex top-3 sticky m-5 max-h-4 border rounded-full shadow-slate-300 shadow-lg items-center p-5 bg-white text-black">
+    <nav className="flex top-3 sticky m-5 max-h-4 border rounded-full shadow-slate-300 shadow-lg items-center p-5 bg-white text-black z-10">
       <NavLink to="/">
         <h1 className="text-2xl font-bold max-md:text-base">BlogSpot</h1>
       </NavLink>
@@ -96,6 +96,14 @@ export default function Navbar() {
                     className="block px-4 py-2 text-black hover:bg-gray-200"
                   >
                     Dashboard
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/editor"
+                    className="block px-4 py-2 text-black hover:bg-gray-200"
+                  >
+                    Editor
                   </NavLink>
                 </li>
                 <li>

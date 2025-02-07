@@ -20,8 +20,18 @@ function genToken(data, secret) {
     return token;
 }
 
-function verifyToken(token, secret) {
-    return jwt.verify(token, secret);
+async function JWTVerify(req, res, next) {
+    const authorization = req.headers.authorization.split(' ')[1];
+    try {
+        const decoded = jwt.verify(authorization, process.env.SECRET_KEY);
+        req.user = decoded;
+        next();
+    } catch (error) {
+        return res.status(401).json({
+            error: error,
+            message: 'Authentication failed'
+        })
+    }
 }
 
-module.exports = { validPassword, genPassword, genToken }
+module.exports = { validPassword, genPassword, genToken, JWTVerify }

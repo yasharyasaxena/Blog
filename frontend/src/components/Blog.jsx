@@ -12,7 +12,7 @@ const Blog = ({ image, title, author, views, id }) => {
   return (
     <div className="max-w-md rounded overflow-hidden shadow-lg m-4">
       <img className="h-40 w-full" src={image} alt={title} />
-      <Link to={`/blog/:${id}`}>
+      <Link to={`/blog/${id}`}>
         <div className="px-6 py-4">
           <div className="font-bold text-xl mb-2">{title}</div>
           <p className="text-gray-700 text-base">By {author}</p>

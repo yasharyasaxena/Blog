@@ -50,7 +50,7 @@ export async function getBlogs() {
 }
 
 export async function getBlog(id) {
-    const response = await fetch(`http://localhost:3000/blogs/${id}`);
+    const response = await fetch(`http://localhost:3000/blog/${id}`);
     let result = await response.json();
     if (!response.ok) {
         throw {
@@ -63,9 +63,9 @@ export async function getBlog(id) {
 }
 
 export async function getUserBlog(token) {
-    const response = await fetch("http://localhost:3000/blogs/user", {
+    const response = await fetch("http://localhost:3000/dashboard", {
         headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${await token}`,
         },
     });
     let result = await response.json();
@@ -107,4 +107,29 @@ export async function getTopUserBlogs(token) {
         }
     }
     return result;
+}
+
+export async function createBlog(data, token) {
+    const response = await fetch("http://localhost:3000/create-blog", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+    });
+    let result = await response.json();
+    let res = {
+        status: response.status,
+        ...result,
+    }
+    console.log(result);
+    if (!response.ok) {
+        throw {
+            status: response.status,
+            statusText: response.statusText,
+            message: result.message,
+        }
+    }
+    return res;
 }

@@ -1,14 +1,26 @@
-import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { Link, Navigate } from "react-router-dom";
 import { AuthContext } from "../App";
 import Blog from "../components/Blog";
+import { getUserBlog } from "../api";
 
 export default function Dashboard() {
   const {
     auth: { token, name },
     setAuth,
   } = useContext(AuthContext);
-  return (
+
+  const [blogs, setBlogs] = useState([]);
+
+  useEffect(() => {
+    token &&
+      getUserBlog(token).then((data) => {
+        console.log(data);
+        setBlogs(data.topUserBlogs);
+      });
+  }, []);
+
+  return token ? (
     <div className="h-screen">
       <div className="flex flex-col items-center mt-10">
         <h1 className="text-3xl">Hello {name}!</h1>
@@ -24,12 +36,15 @@ export default function Dashboard() {
       </div>
       <div className="mx-6">
         <Blog
-          image="https://picsum.photos/200"
-          title="Blog 1"
-          author="Author 1"
-          views="100"
+          image={blogs[0]?.banner}
+          title={blogs[0]?.title}
+          author={blogs[0]?.author.name}
+          views={blogs[0]?.views}
+          id={blogs[0]?._id}
         />
       </div>
     </div>
+  ) : (
+    <Navigate to="/signIn" />
   );
 }
