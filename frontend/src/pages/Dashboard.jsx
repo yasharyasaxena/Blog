@@ -20,6 +20,17 @@ export default function Dashboard() {
       });
   }, []);
 
+  const blogElements = blogs.map((blog) => (
+    <Blog
+      key={blog._id}
+      image={blog.banner}
+      title={blog.title}
+      author={blog.author.name}
+      views={blog.views}
+      id={blog._id}
+    />
+  ));
+
   return token ? (
     <div className="h-screen">
       <div className="flex flex-col items-center mt-10">
@@ -35,13 +46,11 @@ export default function Dashboard() {
         </Link>
       </div>
       <div className="mx-6">
-        <Blog
-          image={blogs[0]?.banner}
-          title={blogs[0]?.title}
-          author={blogs[0]?.author.name}
-          views={blogs[0]?.views}
-          id={blogs[0]?._id}
-        />
+        {blogElements.length > 0 ? (
+          <div className="grid grid-cols-3 gap-4">{blogElements}</div>
+        ) : (
+          <p className="text-center mt-4">You have no blogs yet</p>
+        )}
       </div>
     </div>
   ) : (
