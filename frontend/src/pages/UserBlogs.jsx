@@ -1,16 +1,21 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState, useContext } from "react";
 import Blog from "../components/Blog";
-import { getBlogs } from "../api";
+import { getUserBlogs } from "../api";
+import { AuthContext } from "../App";
 
-export default function Blogs() {
+export default function UserBlogs() {
+  const {
+    auth: { token, name },
+    setAuth,
+  } = useContext(AuthContext);
+
   const [blogs, setBlogs] = useState([]);
 
-  useEffect(() => {
-    getBlogs().then((data) => {
+  token &&
+    getUserBlogs(token).then((data) => {
       console.log(data);
-      setBlogs(data.blogs);
+      setBlogs(data.userBlogs);
     });
-  }, []);
 
   const blogElements = blogs.map((blog) => (
     <Blog
@@ -25,7 +30,7 @@ export default function Blogs() {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-semibold mb-4">All Blogs</h1>
+      <h1 className="text-3xl font-semibold mb-4">All Your Blogs</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {blogElements || (
           <p className="text-center mt-4">You have no blogs yet</p>

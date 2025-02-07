@@ -62,8 +62,8 @@ export async function getBlog(id) {
     return result;
 }
 
-export async function getUserBlog(token) {
-    const response = await fetch("http://localhost:3000/dashboard", {
+export async function getUserBlogs(token) {
+    const response = await fetch("http://localhost:3000/blogs/user", {
         headers: {
             Authorization: `Bearer ${await token}`,
         },

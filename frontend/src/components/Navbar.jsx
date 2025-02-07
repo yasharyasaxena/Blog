@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../App";
 import { useContext, useState } from "react";
 import { CgProfile } from "react-icons/cg";
@@ -8,6 +8,7 @@ export default function Navbar() {
   const {
     auth: { token, name },
   } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleClick = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -15,6 +16,7 @@ export default function Navbar() {
 
   const handleSignOut = () => {
     localStorage.removeItem("auth");
+    navigate("/signIn");
     window.location.reload();
   };
 

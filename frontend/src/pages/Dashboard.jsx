@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { AuthContext } from "../App";
 import Blog from "../components/Blog";
-import { getUserBlog } from "../api";
+import { getTopUserBlogs } from "../api";
 
 export default function Dashboard() {
   const {
@@ -14,7 +14,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     token &&
-      getUserBlog(token).then((data) => {
+      getTopUserBlogs(token).then((data) => {
         console.log(data);
         setBlogs(data.topUserBlogs);
       });
