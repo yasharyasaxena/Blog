@@ -64,6 +64,8 @@ app
             })
         }
         else if (validPassword(password, user.hash, user.salt)) {
+            const blogCount = await Blogs.countDocuments({ 'author.id': user._id });
+            await Users.findByIdAndUpdate(user._id, { blogs: blogCount });
             return res.status(200).json({
                 message: 'Login successful',
                 token: genToken({ id: user._id }, process.env.SECRET_KEY),
@@ -84,6 +86,7 @@ app
 app
     .route("/blog/:id")
     .get(async (req, res) => {
+        await Blogs.findByIdAndUpdate(req.params.id, { $inc: { views: 1 } })
         const blog = await Blogs.findById(req.params.id)
         return res.status(200).json({
             blog: blog

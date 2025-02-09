@@ -1,6 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../App";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import { CgProfile } from "react-icons/cg";
 
 export default function Navbar() {
@@ -9,6 +9,21 @@ export default function Navbar() {
     auth: { token, name },
   } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  const menuRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleClick = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -82,7 +97,10 @@ export default function Navbar() {
             ) : null}
           </li>
           {isMenuOpen && token && (
-            <div className="absolute right-0 mt-10 w-48 bg-white border rounded-md shadow-lg">
+            <div
+              ref={menuRef}
+              className="absolute right-0 mt-10 w-48 bg-white border rounded-md shadow-lg"
+            >
               <ul>
                 <li>
                   <NavLink

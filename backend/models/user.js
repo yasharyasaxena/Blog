@@ -19,7 +19,10 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: true
         },
-        blogs: Number,
+        blogs: {
+            type: Number,
+            default: 0
+        }
     }
 )
 
