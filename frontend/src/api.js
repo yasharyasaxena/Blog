@@ -133,3 +133,24 @@ export async function createBlog(data, token) {
     }
     return res;
 }
+
+export async function getUserInfo(token) {
+    const response = await fetch("http://localhost:3000/profile", {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    let result = await response.json();
+    let res = {
+        status: response.status,
+        ...result,
+    }
+    if (!response.ok) {
+        throw {
+            status: response.status,
+            statusText: response.statusText,
+            message: result.message,
+        }
+    }
+    return res;
+}

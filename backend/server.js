@@ -140,4 +140,15 @@ app
         })
     })
 
+app
+    .route("/profile")
+    .get(JWTVerify, async (req, res) => {
+        const user = await Users.findById(req.user.id)
+        return res.status(200).json({
+            name: user.fullName,
+            email: user.email,
+            blogs: user.blogs
+        })
+    })
+
 app.listen(process.env.PORT, () => console.log(`Server running on port ${process.env.PORT}`));

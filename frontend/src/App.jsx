@@ -9,6 +9,7 @@ import SignIn from "./pages/SignIn";
 import Editor from "./pages/Editor";
 import UserBlogs from "./pages/UserBlogs";
 import Blog from "./pages/Blog";
+import Profile from "./pages/Profile";
 
 export const AuthContext = createContext({});
 
@@ -33,6 +34,7 @@ function App() {
             <Route path="signIn" element={<SignIn />} />
             <Route path="blogs/user" element={<UserBlogs />} />
             <Route path="editor" element={<Editor />} />
+            <Route path="profile" element={<Profile />} />
           </Route>
         </Routes>
       </AuthContext.Provider>
