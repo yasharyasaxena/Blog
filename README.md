@@ -1,78 +1,67 @@
-# **Project Name**
+# **BlogSpot**
 
 ### **A brief description of your app**  
-(A full-stack MERN application for managing tasks with authentication and real-time updates.)  
+A full stack MERN app to create and view blogs.
 
 ## **📸 Demo & Screenshots**  
-[Live Demo](#) (Replace with your deployed link)  
+  
 
-![Screenshot](#) (Replace with an actual image)  
+  
 
 ## **⚡ Features**  
-- ✅ Feature 1  
-- ✅ Feature 2  
-- ✅ Feature 3  
+- ✅ Feature 1  Top blogs visible on home page.
+- ✅ Feature 2  Like blogs you like.
+- ✅ Feature 3  Create blogs using editor mode and view all your top blogs in dashboard 
 
 ## **🛠 Tech Stack**  
-- **Frontend:** React, Redux, TailwindCSS/Bootstrap  
-- **Backend:** Node.js, Express.js  
-- **Database:** MongoDB, Mongoose  
-- **Authentication:** JWT/OAuth  
-- **Hosting:** Vercel (frontend), Render/Heroku (backend), MongoDB Atlas  
+- **Frontend:** React, TailwindCSS
+- **Backend:** Node.js, Express.js
+- **Database:** MongoDB, Mongoose
+- **Authentication:** JWT
 
 ## **🚀 Installation & Setup**  
 
 ### **1. Clone the repository**  
 ```sh
-git clone https://github.com/your-username/your-repo.git
-cd your-repo
+git clone https://github.com/yasharyasaxena/Blog.git
+cd Blog
 ```
 
 ### **2. Install dependencies**  
 ```sh
+cd backend
 npm install
-cd client
+cd ../frontend
 npm install
 ```
 
 ### **3. Set up environment variables**  
-Create a `.env` file in the root and add:  
+Create a `.env` file in the backend folder and add:  
 ```env
 MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_secret_key
-CLOUDINARY_URL=your_cloudinary_url (if using image uploads)
+SECRET_KEY=your_secret_key
 ```
 
 ### **4. Run the development server**  
 ```sh
 # Start backend
-npm run server
+cd backend
+npm start
 
 # Start frontend
-cd client
-npm start
+cd frontend
+npm run dev
 ```
 
 ## **📌 API Routes**  
+Some major backend routes.
 | Method | Route | Description |
 |--------|-------|-------------|
-| **POST** | `/api/auth/register` | Register a new user |
-| **POST** | `/api/auth/login` | User login |
-| **GET** | `/api/users/:id` | Get user details |
-| **PUT** | `/api/users/:id` | Update user details |
-| **DELETE** | `/api/users/:id` | Delete user account |
-
-## **💡 Contributing**  
-Contributions are welcome!  
-1. Fork the project  
-2. Create a new branch (`git checkout -b feature-branch`)  
-3. Commit changes (`git commit -m 'Add new feature'`)  
-4. Push to the branch (`git push origin feature-branch`)  
-5. Open a Pull Request  
-
-## **📜 License**  
-This project is licensed under the **MIT License**.  
+| **POST** | `/register` | Register a new user |
+| **POST** | `/login` | User login |
+| **GET** | `/blogs` | Get all blogs |
+| **GET** | `/blog/:id` | Get specific blog |
+| **POST** | `/create-blog` | Create blog |  
 
 ## **📧 Contact & Acknowledgments**  
-- **Your Name** – [LinkedIn](#) | [Twitter](#)  
-- Special thanks to **libraries, tutorials, or contributors**.  
+- **Yash Arya Saxena** – [LinkedIn](www.linkedin.com/in/yash-arya-saxena-834021331)
