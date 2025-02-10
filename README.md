@@ -4,9 +4,15 @@
 A full stack MERN app to create and view blogs.
 
 ## **📸 Demo & Screenshots**  
-  
 
-  
+  [DEMO Video](https://drive.google.com/file/d/1uZjZVMtjUC5zkLfrd4v_ovVhR4q6IzSs/view?usp=sharing)
+
+  ![Screenshot (72)](https://github.com/user-attachments/assets/1fee0563-9899-4ba3-839c-dd0cf55e8069)
+  ![Screenshot (74)](https://github.com/user-attachments/assets/0506aabe-27f1-4a76-8fc7-2a7ac7c3edb0)
+  ![Screenshot (73)](https://github.com/user-attachments/assets/d3932204-8410-40e0-9108-d56c7a37a169)
+  ![Screenshot (68)](https://github.com/user-attachments/assets/b4891047-1fa3-4455-a2d2-9a17501d9957)
+  ![Screenshot (69)](https://github.com/user-attachments/assets/36d52ed7-2898-4a86-8665-79d02af3cff0)
+  ![Screenshot (67)](https://github.com/user-attachments/assets/d5df5e37-3597-4cc3-b630-d573ef8c0d34)
 
 ## **⚡ Features**  
 - ✅ Feature 1  Top blogs visible on home page.
@@ -38,8 +44,10 @@ npm install
 ### **3. Set up environment variables**  
 Create a `.env` file in the backend folder and add:  
 ```env
-MONGO_URI=your_mongodb_connection_string
+PORT=3000
+MONGO_URL=your_mongodb_connection_string
 SECRET_KEY=your_secret_key
+FRONTEND_URL="http://localhost:5173"
 ```
 
 ### **4. Run the development server**  
@@ -49,7 +57,7 @@ cd backend
 npm start
 
 # Start frontend
-cd frontend
+cd ../frontend
 npm run dev
 ```
 
