@@ -19,6 +19,7 @@
     "@editorjs/marker": "^1.4.0",
     "@editorjs/quote": "^2.7.6",
     "chart.js": "^4.4.7",
+    "dotenv": "^16.4.7",
     "react": "^19.0.0",
     "react-chartjs-2": "^5.3.0",
     "react-dom": "^19.0.0",
