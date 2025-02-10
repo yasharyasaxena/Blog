@@ -64,4 +64,4 @@ Some major backend routes.
 | **POST** | `/create-blog` | Create blog |  
 
 ## **📧 Contact & Acknowledgments**  
-- **Yash Arya Saxena** – [LinkedIn](#www.linkedin.com/in/yash-arya-saxena-834021331)
+- **Yash Arya Saxena** – [LinkedIn](https://www.linkedin.com/in/yash-arya-saxena-834021331)
