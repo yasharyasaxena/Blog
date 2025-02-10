@@ -63,5 +63,5 @@ Some major backend routes.
 | **GET** | `/blog/:id` | Get specific blog |
 | **POST** | `/create-blog` | Create blog |  
 
-## **📧 Contact & Acknowledgments**  
+## **📧 Contact**  
 - **Yash Arya Saxena** – [LinkedIn](https://www.linkedin.com/in/yash-arya-saxena-834021331)
