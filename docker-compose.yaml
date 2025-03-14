@@ -1,0 +1,30 @@
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - 5173:5173
+    stdin_open: true
+  backend:
+    build: ./backend
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+    networks:
+      - blog_network
+    environment:
+      - MONGO_URL=mongodb://db:27017/blog_site
+  db:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    volumes:
+      - ./data:/data/db
+    networks:
+      - blog_network
+networks:
+  blog_network:
+    driver: bridge
+
+volumes:
+  data:
