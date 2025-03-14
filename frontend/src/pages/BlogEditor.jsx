@@ -76,7 +76,7 @@ export default function BlogEditor() {
   const handleTitleChange = (event) => {
     let input = event.target;
 
-    input.style.height = "auto";
+    // input.style.height = "auto";
     input.style.height = input.scrollHeight + "px";
 
     setBlog({ ...blog, title: input.value });
@@ -106,15 +106,15 @@ export default function BlogEditor() {
       <textarea
         defaultValue={title}
         placeholder="Blog Title"
-        className="text-4xl font-medium outline-none w-full h-20 resize-none mt-10 leading-tight placeholder:opacity-40"
+        className="text-4xl font-medium outline-none w-full h-12 resize-none mt-10 leading-tight placeholder:opacity-40"
         onKeyDown={handleTitleKeyDown}
         onChange={handleTitleChange}
       ></textarea>
       <hr className="w-full opacity-80 my-5" />
-      <div id="textEditor"></div>
+      <div className="prose" id="textEditor"></div>
       <button
         onClick={handlePublish}
-        className="bg-blue-500 text-white px-4 py-2 rounded mt-5 hover:bg-white hover:text-blue-500 border border-blue-500"
+        className="flex mx-auto bg-blue-500 text-white px-4 py-2 rounded mt-5 hover:bg-white hover:text-blue-500 border border-blue-500"
       >
         <span className="text-lg">Publish</span>
       </button>
