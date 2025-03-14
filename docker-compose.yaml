@@ -14,6 +14,8 @@ services:
       - blog_network
     environment:
       - MONGO_URL=mongodb://db:27017/blog_site
+    env_file:
+      - ./backend/.env
   db:
     image: mongo:latest
     ports:
