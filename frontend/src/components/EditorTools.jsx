@@ -18,8 +18,8 @@ export const EDITOR_JS_TOOLS = {
     class: Header,
     config: {
       placeholder: "Enter a header",
-      levels: [2, 3, 4, 5, 6],
-      defaultLevel: 2,
+      levels: [1, 2, 3, 4, 5, 6],
+      defaultLevel: 1,
     },
   },
   marker: Marker,
