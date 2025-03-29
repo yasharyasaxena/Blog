@@ -7,7 +7,6 @@ export default function Blogs() {
 
   useEffect(() => {
     getBlogs().then((data) => {
-      console.log(data);
       setBlogs(data.blogs);
     });
   }, []);

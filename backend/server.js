@@ -151,4 +151,31 @@ app
         })
     })
 
+app
+    .route("/blog-edit/:id")
+    .get(JWTVerify, async (req, res) => {
+        const blog = await Blogs.findById(req.params.id)
+        if (!blog) {
+            return res.status(404).json({
+                message: 'Blog not found'
+            })
+        }
+        return res.status(200).json({
+            blog: blog
+        })
+    })
+    .post(JWTVerify, async (req, res) => {
+        const blog = await Blogs.findById(req.params.id)
+        if (blog.author.id.toString() !== req.user.id) {
+            return res.status(401).json({
+                message: 'Unauthorized'
+            })
+        }
+        await Blogs.findByIdAndUpdate(req.params.id, { $set: req.body })
+        return res.status(200).json({
+            message: 'Blog updated successfully'
+        })
+    })
+
+
 app.listen(process.env.PORT, () => console.log(`Server running on port ${process.env.PORT}`));

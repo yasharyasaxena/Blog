@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { AuthContext } from "../App";
 import Blog from "../components/Blog";
@@ -15,7 +15,6 @@ export default function Dashboard() {
   useEffect(() => {
     token &&
       getTopUserBlogs(token).then((data) => {
-        console.log(data);
         setBlogs(data.topUserBlogs);
       });
   }, []);

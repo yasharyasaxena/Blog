@@ -1,7 +1,6 @@
 import blogBannerImg from "../assets/blogBanner.png";
 import { useState, useContext } from "react";
-import { EditorContext } from "./Editor";
-import { AuthContext } from "../App";
+import { AuthContext, EditorContext } from "../App";
 import { useEffect } from "react";
 import EditorJS from "@editorjs/editorjs";
 import { EDITOR_JS_TOOLS } from "../components/EditorTools";

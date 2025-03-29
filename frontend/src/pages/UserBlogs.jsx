@@ -13,7 +13,6 @@ export default function UserBlogs() {
 
   token &&
     getUserBlogs(token).then((data) => {
-      console.log(data);
       setBlogs(data.userBlogs);
     });
 

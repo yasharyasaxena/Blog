@@ -1,14 +1,20 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router";
+import { useParams, useSearchParams } from "react-router";
 import { getBlog } from "../api";
 import EditorJS from "@editorjs/editorjs";
 import { EDITOR_JS_TOOLS } from "../components/EditorTools";
 
 export default function Blog() {
   const { id } = useParams();
+  const [searchParams] = useSearchParams();
+  const [status, setStatus] = useState(searchParams?.get("updated"));
   const [blog, setBlog] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    setError({ message: searchParams?.get("error") });
+  }, [searchParams]); // Update error state when searchParams change
 
   useEffect(() => {
     getBlog(id)
@@ -37,8 +43,12 @@ export default function Blog() {
     return <h1>Loading...</h1>;
   }
 
-  if (error) {
-    return <h1>{error.message}</h1>;
+  if (error.message) {
+    alert(error.message);
+  }
+  if (status === "true") {
+    alert("Blog updated successfully!");
+    setStatus(null);
   }
 
   return (

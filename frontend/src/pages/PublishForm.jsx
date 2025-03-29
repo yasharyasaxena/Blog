@@ -1,8 +1,7 @@
 import { useState, useContext, useEffect } from "react";
-import { EditorContext } from "./Editor";
 import { IoMdClose } from "react-icons/io";
 import EditorJS from "@editorjs/editorjs";
-import { AuthContext } from "../App";
+import { AuthContext, EditorContext } from "../App";
 import { createBlog } from "../api";
 import { useNavigate } from "react-router-dom";
 import { EDITOR_JS_TOOLS } from "../components/EditorTools";
