@@ -150,6 +150,21 @@ app
             blogs: user.blogs
         })
     })
+    .put(JWTVerify, async (req, res) => {
+        const user = await Users.findById(req.user.id)
+        if (user) {
+            user.fullName = req.body.name
+            await user.save()
+            return res.status(200).json({
+                message: 'User updated successfully'
+            })
+        }
+        else {
+            return res.status(404).json({
+                message: 'User not found'
+            })
+        }
+    })
 
 app
     .route("/blog-edit/:id")
