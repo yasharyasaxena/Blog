@@ -1,14 +1,70 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
+import { AuthContext } from "../App";
 
 const Blog = ({ image, title, author, views, id }) => {
   const [isLiked, setIsLiked] = useState(false);
+  const {
+    auth: { token },
+  } = useContext(AuthContext);
 
-  const handleLike = () => {
+  const handleLike = async () => {
+    if (!token) {
+      alert("Please login to like the blog.");
+      return;
+    }
     setIsLiked(!isLiked);
+    if (!isLiked) {
+      const response = await fetch(`http://localhost:3000/liked-blogs/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.status !== 200) {
+        console.error("Error liking blog:", await response.json());
+      }
+    } else {
+      const response = await fetch(`http://localhost:3000/liked-blogs/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.status !== 200) {
+        console.error("Error unliking blog:", await response.json());
+      }
+      setIsLiked(false);
+    }
   };
+
+  useEffect(() => {
+    const findLiked = async () => {
+      const response = await fetch(`http://localhost:3000/liked-blogs/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await response.json();
+      if (response.status === 200) {
+        const likedBlogs = data.likedBlogs || [];
+        if (likedBlogs.includes(id)) {
+          setIsLiked(true);
+        }
+      } else {
+        console.error("Error fetching blog data:", data.message);
+      }
+    };
+    if (token) {
+      findLiked();
+    }
+  }, [id, token]);
 
   return (
     <div className="max-w-md rounded overflow-hidden shadow-lg m-4">

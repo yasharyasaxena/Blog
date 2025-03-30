@@ -31,7 +31,7 @@ export default function Dashboard() {
   ));
 
   return token ? (
-    <div className="h-screen">
+    <div className="h-screen mb-40">
       <div className="flex flex-col items-center mt-10">
         <h1 className="text-3xl">Hello {name}!</h1>
       </div>

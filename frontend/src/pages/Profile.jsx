@@ -29,19 +29,29 @@ export default function Profile() {
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Name
           </label>
-          <p className="text-gray-900">{userInfo.name}</p>
+          <input
+            type="text"
+            value={userInfo.name || ""}
+            disabled={!!userInfo.name}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            onChange={(e) => setUserInfo({ ...userInfo, name: e.target.value })}
+          />
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Email
           </label>
-          <p className="text-gray-900">{userInfo.email}</p>
+          <p className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            {userInfo.email}
+          </p>
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Total number of blogs
           </label>
-          <p className="text-gray-900">{userInfo.blogs}</p>
+          <p className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            {userInfo.blogs}
+          </p>
         </div>
       </div>
     </div>

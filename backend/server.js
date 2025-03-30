@@ -177,5 +177,43 @@ app
         })
     })
 
+app
+    .route("/liked-blogs/:id")
+    .get(JWTVerify, async (req, res) => {
+        const user = await Users.findById(req.user.id)
+        return res.status(200).json({
+            likedBlogs: user.likedBlogs
+        })
+    })
+    .post(JWTVerify, async (req, res) => {
+        const user = await Users.findById(req.user.id)
+        if (!user.likedBlogs.includes(req.params.id)) {
+            user.likedBlogs.push(req.params.id)
+            await user.save()
+            return res.status(200).json({
+                message: 'Blog liked successfully'
+            })
+        }
+        else {
+            return res.status(409).json({
+                message: 'Blog already liked'
+            })
+        }
+    })
+    .delete(JWTVerify, async (req, res) => {
+        const user = await Users.findById(req.user.id)
+        if (user.likedBlogs.includes(req.params.id)) {
+            user.likedBlogs = user.likedBlogs.filter(blogId => blogId.toString() !== req.params.id)
+            await user.save()
+            return res.status(200).json({
+                message: 'Blog unliked successfully'
+            })
+        }
+        else {
+            return res.status(409).json({
+                message: 'Blog not liked yet'
+            })
+        }
+    })
 
 app.listen(process.env.PORT, () => console.log(`Server running on port ${process.env.PORT}`));

@@ -22,7 +22,11 @@ const userSchema = new mongoose.Schema(
         blogs: {
             type: Number,
             default: 0
-        }
+        },
+        likedBlogs: {
+            type: [mongoose.Schema.Types.ObjectId],
+            default: []
+        },
     }
 )
 
