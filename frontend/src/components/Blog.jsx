@@ -4,7 +4,7 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
 import { AuthContext } from "../App";
 
-const Blog = ({ image, title, author, views, id }) => {
+const Blog = ({ image, title, author, views, likes, date, id }) => {
   const [isLiked, setIsLiked] = useState(false);
   const {
     auth: { token },
@@ -73,14 +73,20 @@ const Blog = ({ image, title, author, views, id }) => {
         <div className="px-6 py-4">
           <div className="font-bold text-xl mb-2">{title}</div>
           <p className="text-gray-700 text-base">By {author}</p>
+          <p className="text-gray-600 text-sm">Published on : {date}</p>
         </div>
       </Link>
       <div className="px-6 pt-4 pb-2 flex justify-between items-center">
         <span className="text-gray-600 text-sm">Views: {views}</span>
         <div className="flex items-center space-x-6">
-          <button onClick={handleLike} className="focus:outline-none">
-            {isLiked ? <FaHeart className="text-red-500" /> : <FaRegHeart />}
-          </button>
+          <div>
+            <span className="text-gray-600 text-sm align-top mr-1">
+              {likes}
+            </span>
+            <button onClick={handleLike} className="focus:outline-none">
+              {isLiked ? <FaHeart className="text-red-500" /> : <FaRegHeart />}
+            </button>
+          </div>
           <button className="focus:outline-none">
             <Link
               to={`/blog-edit/${id}`}

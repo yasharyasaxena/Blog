@@ -190,6 +190,9 @@ app
         if (!user.likedBlogs.includes(req.params.id)) {
             user.likedBlogs.push(req.params.id)
             await user.save()
+            const blog = await Blogs.findById(req.params.id)
+            blog.likes = blog.likes + 1
+            await blog.save()
             return res.status(200).json({
                 message: 'Blog liked successfully'
             })
@@ -205,6 +208,9 @@ app
         if (user.likedBlogs.includes(req.params.id)) {
             user.likedBlogs = user.likedBlogs.filter(blogId => blogId.toString() !== req.params.id)
             await user.save()
+            const blog = await Blogs.findById(req.params.id)
+            blog.likes = blog.likes - 1
+            await blog.save()
             return res.status(200).json({
                 message: 'Blog unliked successfully'
             })

@@ -19,6 +19,8 @@ export default function Home() {
       title={blog.title}
       author={blog.author.name}
       views={blog.views}
+      likes={blog.likes}
+      date={new Date(blog.date).toLocaleDateString()}
       id={blog._id}
     />
   ));
