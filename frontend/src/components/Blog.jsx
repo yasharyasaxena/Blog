@@ -1,14 +1,30 @@
 import { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { FaHeart, FaRegHeart, FaTrash } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
 import { AuthContext } from "../App";
+import { deleteBlog } from "../api";
 
 const Blog = ({ image, title, author, views, likes, date, id }) => {
   const [isLiked, setIsLiked] = useState(false);
   const {
     auth: { token },
   } = useContext(AuthContext);
+
+  const handleDelete = async () => {
+    try {
+      const response = await deleteBlog(id, token);
+      if (response.status === 200) {
+        alert("Blog deleted successfully");
+      } else {
+        alert("Error deleting blog");
+      }
+    } catch (error) {
+      alert(error.status === 401 ? "Unauthorized" : "Error deleting blog");
+    } finally {
+      window.location.reload();
+    }
+  };
 
   const handleLike = async () => {
     if (!token) {
@@ -94,6 +110,9 @@ const Blog = ({ image, title, author, views, likes, date, id }) => {
             >
               <FiEdit />
             </Link>
+          </button>
+          <button className="focus:outline-none" onClick={handleDelete}>
+            <FaTrash />
           </button>
         </div>
       </div>

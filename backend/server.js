@@ -92,6 +92,18 @@ app
             blog: blog
         })
     })
+    .delete(JWTVerify, async (req, res) => {
+        const blog = await Blogs.findById(req.params.id)
+        if (blog.author.id.toString() !== req.user.id) {
+            return res.status(401).json({
+                message: 'Unauthorized'
+            })
+        }
+        await Blogs.findByIdAndDelete(req.params.id)
+        return res.status(200).json({
+            message: 'Blog deleted successfully'
+        })
+    })
 
 app
     .route("/home")
@@ -173,6 +185,11 @@ app
         if (!blog) {
             return res.status(404).json({
                 message: 'Blog not found'
+            })
+        }
+        if (blog.author.id.toString() !== req.user.id) {
+            return res.status(401).json({
+                message: 'Unauthorized'
             })
         }
         return res.status(200).json({

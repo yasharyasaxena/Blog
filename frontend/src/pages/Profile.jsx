@@ -60,7 +60,7 @@ export default function Profile() {
               type="text"
               value={userInfo.name || ""}
               disabled={editMode ? false : true}
-              className="disabled:bg-white focus:outline-none focus:shadow-outline w-full"
+              className="disabled:bg-white focus:outline-none focus:shadow-outline w-full disabled:font-bold"
               onChange={(e) =>
                 setUserInfo({ ...userInfo, name: e.target.value })
               }
