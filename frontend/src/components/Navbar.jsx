@@ -11,6 +11,7 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   const menuRef = useRef(null);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -25,6 +26,17 @@ export default function Navbar() {
     };
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   const handleClick = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -36,11 +48,19 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="flex top-3 sticky m-5 max-h-4 border rounded-full shadow-slate-300 shadow-lg items-center p-5 bg-white text-black z-10">
-      <NavLink to="/">
-        <h1 className="text-2xl font-bold max-md:text-base">BlogSpot</h1>
-      </NavLink>
-      <div className="flex flex-grow justify-end max-md:text-sm">
+    <nav
+      className={`flex top-5 sticky m-5 max-h-4 justify-between items-center p-5 text-black z-10 transition-all duration-500 ease-in-out ${
+        isScrolled
+          ? "border rounded-full shadow-slate-300 shadow-lg w-1/2 mx-auto bg-opacity-90 backdrop-blur-md"
+          : "bg-white w-11/12"
+      }`}
+    >
+      <div className="flex items-center gap-2">
+        <NavLink to="/">
+          <h1 className="text-2xl font-bold max-md:text-base">BlogSpot</h1>
+        </NavLink>
+      </div>
+      <div className="flex max-md:text-sm">
         <ul className="flex gap-2 md:gap-5">
           <li>
             <NavLink
