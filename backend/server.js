@@ -17,10 +17,13 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
-const corsOptions = {
-    origin: process.env.FRONTEND_URL,
-};
-app.use(cors(corsOptions));
+if (process.env.NODE_ENV === 'development') {
+    const corsOptions = {
+        origin: process.env.FRONTEND_URL,
+    };
+    app.use(cors(corsOptions));
+}
+
 
 app
     .post("/register", async (req, res) => {

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FaHeart, FaRegHeart, FaTrash } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
 import { AuthContext } from "../App";
-import { deleteBlog } from "../api";
+import { deleteBlog, backend } from "../api";
 
 const Blog = ({ image, title, author, views, likes, date, id }) => {
   const [isLiked, setIsLiked] = useState(false);
@@ -33,7 +33,7 @@ const Blog = ({ image, title, author, views, likes, date, id }) => {
     }
     setIsLiked(!isLiked);
     if (!isLiked) {
-      const response = await fetch(`http://localhost:3000/liked-blogs/${id}`, {
+      const response = await fetch(`${backend}/liked-blogs/${id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -44,7 +44,7 @@ const Blog = ({ image, title, author, views, likes, date, id }) => {
         console.error("Error liking blog:", await response.json());
       }
     } else {
-      const response = await fetch(`http://localhost:3000/liked-blogs/${id}`, {
+      const response = await fetch(`${backend}/liked-blogs/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -60,7 +60,7 @@ const Blog = ({ image, title, author, views, likes, date, id }) => {
 
   useEffect(() => {
     const findLiked = async () => {
-      const response = await fetch(`http://localhost:3000/liked-blogs/${id}`, {
+      const response = await fetch(`${backend}/liked-blogs/${id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
