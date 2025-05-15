@@ -54,7 +54,9 @@ export default function Dashboard() {
       ) : (
         <div className="mx-6">
           {blogElements.length > 0 ? (
-            <div className="grid grid-cols-3 gap-4">{blogElements}</div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {blogElements}
+            </div>
           ) : (
             <p className="text-center mt-4">You have no blogs yet</p>
           )}
