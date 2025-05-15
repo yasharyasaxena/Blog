@@ -1,23 +1,22 @@
 # **BlogSpot**
 
 ### **A brief description of your app**  
-A full stack MERN app to create and view blogs.
+A full-stack app where you can post blogs that can be viewed and liked by the public.
+You can delete and edit your blogs.
+The app is secured using JWT authentication.
 
-## **📸 Demo & Screenshots**  
-
-  [DEMO Video](https://drive.google.com/file/d/1uZjZVMtjUC5zkLfrd4v_ovVhR4q6IzSs/view?usp=sharing)
-
-  ![Screenshot (72)](https://github.com/user-attachments/assets/1fee0563-9899-4ba3-839c-dd0cf55e8069)
-  ![Screenshot (74)](https://github.com/user-attachments/assets/0506aabe-27f1-4a76-8fc7-2a7ac7c3edb0)
-  ![Screenshot (73)](https://github.com/user-attachments/assets/d3932204-8410-40e0-9108-d56c7a37a169)
-  ![Screenshot (68)](https://github.com/user-attachments/assets/b4891047-1fa3-4455-a2d2-9a17501d9957)
-  ![Screenshot (69)](https://github.com/user-attachments/assets/36d52ed7-2898-4a86-8665-79d02af3cff0)
-  ![Screenshot (67)](https://github.com/user-attachments/assets/d5df5e37-3597-4cc3-b630-d573ef8c0d34)
+## **📸 Deployed Link  & Screenshots**  
+[Link](https://blog-mauve-iota-18.vercel.app/)
+![image](https://github.com/user-attachments/assets/8b0a1034-5425-48df-8bc0-271eb1c6a5d0)
+![image](https://github.com/user-attachments/assets/a2807825-40a3-4196-b1de-e3291502b72a)
+![image](https://github.com/user-attachments/assets/dc99ad7c-ed9b-455b-a716-7f1862db6812)
 
 ## **⚡ Features**  
-- ✅ Feature 1  Top blogs visible on home page.
-- ✅ Feature 2  Like blogs you like.
-- ✅ Feature 3  Create blogs using editor mode and view all your top blogs in dashboard 
+- ✅ Top blogs are visible on the home page.
+- ✅ Liked Blogs are persistent and user-based.
+- ✅ Create blogs using editor mode using a rich text editor and upload a banner image.
+- ✅ Perform CRUD operations on the blogs.
+- ✅ JWT Authentication for persistence of logged in user even after closing browser.
 
 ## **🛠 Tech Stack**  
 - **Frontend:** React, TailwindCSS
@@ -62,14 +61,17 @@ npm run dev
 ```
 
 ## **📌 API Routes**  
-Some major backend routes.
 | Method | Route | Description |
 |--------|-------|-------------|
 | **POST** | `/register` | Register a new user |
 | **POST** | `/login` | User login |
+| **GET** | `/profile` | Get user profile |
 | **GET** | `/blogs` | Get all blogs |
 | **GET** | `/blog/:id` | Get specific blog |
-| **POST** | `/create-blog` | Create blog |  
+| **DELETE** | `/blog/:id` | Delete specific blog |
+| **PATCH** | `/blog-edit/:id` | Update specific blog |
+| **POST** | `/create-blog` | Create blog |
+
 
 ## **📧 Contact**  
 - **Yash Arya Saxena** – [LinkedIn](https://www.linkedin.com/in/yash-arya-saxena-834021331)
