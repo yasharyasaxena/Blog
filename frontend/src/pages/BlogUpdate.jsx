@@ -51,13 +51,12 @@ export default function BlogUpdate() {
       setLoading(true);
       setBlog(updatedBlog);
 
-      const response = await updateBlog(updatedBlog, token);
-      const data = await response.json();
-      if (response.ok) {
+      const response = await updateBlog(updatedBlog, id, token);
+      if (response.status === 200) {
         navigate("/blog/" + id + "?updated=true");
       } else {
-        toast.error(data.message || "Failed to update the blog");
-        throw new Error(data.message || "Failed to update the blog");
+        toast.error(response.message || "Failed to update the blog");
+        throw new Error(response.message || "Failed to update the blog");
       }
     } catch (error) {
       navigate("/blog/" + id + "?updated=false&error=" + error.message);
