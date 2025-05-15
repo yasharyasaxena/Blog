@@ -7,7 +7,7 @@ The app is secured using JWT authentication.
 
 ## **📸 Deployed Link  & Screenshots**
       
-      **[Link](https://blog-mauve-iota-18.vercel.app/)**
+- **[Link](https://blog-mauve-iota-18.vercel.app/)**
 
 ![image](https://github.com/user-attachments/assets/8b0a1034-5425-48df-8bc0-271eb1c6a5d0)
 ![image](https://github.com/user-attachments/assets/a2807825-40a3-4196-b1de-e3291502b72a)
