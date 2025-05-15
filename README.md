@@ -5,8 +5,10 @@ A full-stack app where you can post blogs that can be viewed and liked by the pu
 You can delete and edit your blogs.
 The app is secured using JWT authentication.
 
-## **📸 Deployed Link  & Screenshots**  
-[Link](https://blog-mauve-iota-18.vercel.app/)
+## **📸 Deployed Link  & Screenshots**
+      
+      **[Link](https://blog-mauve-iota-18.vercel.app/)**
+
 ![image](https://github.com/user-attachments/assets/8b0a1034-5425-48df-8bc0-271eb1c6a5d0)
 ![image](https://github.com/user-attachments/assets/a2807825-40a3-4196-b1de-e3291502b72a)
 ![image](https://github.com/user-attachments/assets/dc99ad7c-ed9b-455b-a716-7f1862db6812)
