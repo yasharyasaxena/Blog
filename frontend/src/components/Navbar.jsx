@@ -6,6 +6,7 @@ import { CgProfile } from "react-icons/cg";
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const {
+    setAuth,
     auth: { token, name },
   } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -43,17 +44,19 @@ export default function Navbar() {
 
   const handleSignOut = () => {
     localStorage.removeItem("auth");
-    navigate("/signIn");
-    window.location.reload();
+    setAuth({ token: null, name: null });
+    setIsMenuOpen(false);
+    navigate("../signIn");
   };
 
   return (
     <nav
-      className={`flex top-5 sticky m-5 max-h-4 justify-between items-center p-5 text-black z-10 transition-all duration-500 ease-in-out ${
-        isScrolled
-          ? "border rounded-full shadow-slate-300 shadow-lg w-1/2 mx-auto bg-opacity-90 backdrop-blur-md"
-          : "bg-white w-11/12"
-      }`}
+      className={`flex top-5 sticky m-5 max-h-4 justify-between items-center p-5 text-black z-10 transition-all duration-500 ease-in-out max-md:
+         ${
+           isScrolled
+             ? "rounded-full shadow-slate-300 text-white bg-gray-500 shadow-lg w-1/2 mx-auto bg-opacity-90 backdrop-blur-md"
+             : "bg-white w-11/12"
+         }`}
     >
       <div className="flex items-center gap-2">
         <NavLink to="/">

@@ -4,10 +4,13 @@ import { register } from "../api";
 import { FaExclamationTriangle } from "react-icons/fa";
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
+import Loading from "../components/Loading";
+import s from "@editorjs/marker";
 
 export default function Register() {
   const [error, setError] = useState(null);
   const [visibility, setVisibility] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   async function action(formdata) {
@@ -25,9 +28,11 @@ export default function Register() {
       });
     } else {
       try {
+        setLoading(true);
         const data = await register({ fullName, email, password });
         navigate("/signIn?registered=true");
       } catch (e) {
+        setLoading(false);
         setError({
           ...e,
         });
@@ -104,9 +109,13 @@ export default function Register() {
               )}
             </div>
           </div>
-          <button className="flex w-80 py-3 px-4 items-center justify-center gap-2 rounded-xl bg-custom-gradient text-white">
+          <button
+            className="flex w-80 py-3 px-4 items-center justify-center gap-2 rounded-xl bg-custom-gradient text-white"
+            disabled={loading}
+          >
             Register
           </button>
+          {loading && <Loading />}
         </form>
         <hr className="w-80 border-t border-black" />
         <div className="flex mx-auto justify-center gap-1">

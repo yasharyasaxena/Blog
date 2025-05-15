@@ -4,6 +4,7 @@ import { AuthContext, EditorContext } from "../App";
 import { useEffect } from "react";
 import EditorJS from "@editorjs/editorjs";
 import { EDITOR_JS_TOOLS } from "../components/EditorTools";
+import { toast } from "react-toastify";
 
 export default function BlogEditor() {
   const [imgURL, setImgURL] = useState(blogBannerImg);
@@ -52,12 +53,12 @@ export default function BlogEditor() {
 
   const handlePublish = () => {
     if (!title.length || !banner.length) {
-      alert("Please fill in all the fields!");
+      toast.error("Please fill in all the fields!");
       return;
     } else if (textEditor.isReady) {
       textEditor.save().then((outputData) => {
         if (!outputData.blocks.length) {
-          alert("Please write some content!");
+          toast.error("Please write some content!");
           return;
         }
         setBlog({ ...blog, content: outputData });

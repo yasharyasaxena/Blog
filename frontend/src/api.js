@@ -211,3 +211,51 @@ export async function getLikedBlogs(id, token) {
     });
     return response;
 }
+
+export async function updateUserInfo(data, token) {
+    const response = await fetch(`${api}/profile`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+    });
+    let result = await response.json();
+    let res = {
+        status: response.status,
+        ...result,
+    }
+    if (!response.ok) {
+        throw {
+            status: response.status,
+            statusText: response.statusText,
+            message: result.message,
+        }
+    }
+    return res;
+}
+
+export async function updateBlog(data, id, token) {
+    const response = await fetch(`${api}/blog-edit/${id}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+    });
+    let result = await response.json();
+    let res = {
+        status: response.status,
+        ...result,
+    }
+    if (!response.ok) {
+        throw {
+            status: response.status,
+            statusText: response.statusText,
+            message: result.message,
+        }
+    }
+    return res;
+}

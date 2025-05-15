@@ -4,31 +4,35 @@ import { FaHeart, FaRegHeart, FaTrash } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
 import { AuthContext } from "../App";
 import { deleteBlog, likeBlog, unlikeBlog, getLikedBlogs } from "../api";
+import { toast } from "react-toastify";
 
 const Blog = ({ image, title, author, views, likes, date, id }) => {
   const [isLiked, setIsLiked] = useState(false);
   const {
     auth: { token },
   } = useContext(AuthContext);
+  const [error, setError] = useState(null);
 
   const handleDelete = async () => {
     try {
       const response = await deleteBlog(id, token);
       if (response.status === 200) {
-        alert("Blog deleted successfully");
+        toast.success("Blog deleted successfully");
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       } else {
-        alert("Error deleting blog");
+        toast.error("Error deleting blog");
       }
     } catch (error) {
-      alert(error.status === 401 ? "Unauthorized" : "Error deleting blog");
-    } finally {
-      window.location.reload();
+      setError(error);
+      toast.error(error.message);
     }
   };
 
   const handleLike = async () => {
     if (!token) {
-      alert("Please login to like the blog.");
+      toast.error("Please login to like the blog");
       return;
     }
     setIsLiked(!isLiked);
@@ -36,14 +40,20 @@ const Blog = ({ image, title, author, views, likes, date, id }) => {
       const response = await likeBlog(id, token);
       if (response.status !== 200) {
         console.error("Error liking blog:", await response.json());
+        toast.error("Error liking blog");
       }
     } else {
       const response = await unlikeBlog(id, token);
       if (response.status !== 200) {
         console.error("Error unliking blog:", await response.json());
+        toast.error("Error unliking blog");
       }
       setIsLiked(false);
     }
+    toast.success(isLiked ? "Blog unliked" : "Blog liked");
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
   };
 
   useEffect(() => {
@@ -65,40 +75,58 @@ const Blog = ({ image, title, author, views, likes, date, id }) => {
   }, [id, token]);
 
   return (
-    <div className="max-w-md rounded overflow-hidden shadow-lg m-4">
-      <Link to={`/blog/${id}`}>
-        <img className="h-40 w-full" src={image} alt={title} />
-        <div className="px-6 py-4">
-          <div className="font-bold text-xl mb-2">{title}</div>
-          <p className="text-gray-700 text-base">By {author}</p>
-          <p className="text-gray-600 text-sm">Published on : {date}</p>
-        </div>
-      </Link>
-      <div className="px-6 pt-4 pb-2 flex justify-between items-center">
-        <span className="text-gray-600 text-sm">Views: {views}</span>
-        <div className="flex items-center space-x-6">
-          <div>
-            <span className="text-gray-600 text-sm align-top mr-1">
-              {likes}
-            </span>
-            <button onClick={handleLike} className="focus:outline-none">
-              {isLiked ? <FaHeart className="text-red-500" /> : <FaRegHeart />}
+    <>
+      <div className="w-full h-full rounded-2xl overflow-hidden shadow-2xl mt-4 transition-transform duration-300 transform hover:scale-105">
+        <Link to={`/blog/${id}`}>
+          <img
+            className="h-48 w-full object-cover object-top"
+            src={image}
+            alt={title}
+          />
+          <div className="px-6 pt-4">
+            <div className="font-bold text-xl mb-4">{title}</div>
+            <p className="text-gray-700 text-base">By {author}</p>
+            <p className="text-gray-600 text-sm">
+              Published on :{" "}
+              {new Date(date).getDate() +
+                "/" +
+                String(new Date(date).getMonth() + 1).padStart(2, "0") +
+                "/" +
+                new Date(date).getFullYear()}
+            </p>
+          </div>
+        </Link>
+        <div className="px-6 pt-4 pb-3 flex justify-between items-center text-xl">
+          <span className="text-gray-600">{views} views</span>
+          <div className="flex items-center space-x-6">
+            <div className="flex items-center space-x-2">
+              <span className="text-gray-600">{likes}</span>
+              <button
+                onClick={handleLike}
+                className="focus:outline-none hover:text-red-600"
+              >
+                {isLiked ? (
+                  <FaHeart className="text-red-500" />
+                ) : (
+                  <FaRegHeart />
+                )}
+              </button>
+            </div>
+            <button className="focus:outline-none">
+              <Link to={`/blog-edit/${id}`} className="hover:text-blue-600">
+                <FiEdit />
+              </Link>
+            </button>
+            <button
+              className="focus:outline-none hover:text-red-600"
+              onClick={handleDelete}
+            >
+              <FaTrash />
             </button>
           </div>
-          <button className="focus:outline-none">
-            <Link
-              to={`/blog-edit/${id}`}
-              className="text-gray-600 hover:text-gray-800"
-            >
-              <FiEdit />
-            </Link>
-          </button>
-          <button className="focus:outline-none" onClick={handleDelete}>
-            <FaTrash />
-          </button>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

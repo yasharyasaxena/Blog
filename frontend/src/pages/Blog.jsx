@@ -3,6 +3,8 @@ import { useParams, useSearchParams } from "react-router";
 import { getBlog } from "../api";
 import EditorJS from "@editorjs/editorjs";
 import { EDITOR_JS_TOOLS } from "../components/EditorTools";
+import Loading from "../components/Loading";
+import { toast } from "react-toastify";
 
 export default function Blog() {
   const { id } = useParams();
@@ -14,7 +16,7 @@ export default function Blog() {
 
   useEffect(() => {
     setError({ message: searchParams?.get("error") });
-  }, [searchParams]); // Update error state when searchParams change
+  }, [searchParams]);
 
   useEffect(() => {
     getBlog(id)
@@ -40,14 +42,14 @@ export default function Blog() {
   }, [blog]);
 
   if (loading) {
-    return <h1>Loading...</h1>;
+    return <Loading />;
   }
 
   if (error.message) {
-    alert(error.message);
+    toast.error(error.message);
   }
   if (status === "true") {
-    alert("Blog updated successfully!");
+    toast.success("Blog updated successfully!");
     setStatus(null);
   }
 

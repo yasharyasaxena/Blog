@@ -3,6 +3,7 @@ import { Link, Navigate } from "react-router-dom";
 import { AuthContext } from "../App";
 import Blog from "../components/Blog";
 import { getTopUserBlogs } from "../api";
+import Loading from "../components/Loading";
 
 export default function Dashboard() {
   const {
@@ -11,11 +12,13 @@ export default function Dashboard() {
   } = useContext(AuthContext);
 
   const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     token &&
       getTopUserBlogs(token).then((data) => {
         setBlogs(data.topUserBlogs);
+        setLoading(false);
       });
   }, []);
 
@@ -37,7 +40,7 @@ export default function Dashboard() {
       <div className="flex flex-col items-center mt-10">
         <h1 className="text-3xl">Hello {name}!</h1>
       </div>
-      <div className="flex mx-10 mt-0 border-b textl-xl font-thin border-black py-2">
+      <div className="flex mx-10 mt-0 mb-4 border-b textl-xl font-thin border-black py-2">
         <p>Here are your top Blogs</p>
         <Link
           to="/blogs/user"
@@ -46,13 +49,17 @@ export default function Dashboard() {
           <p>View All</p>
         </Link>
       </div>
-      <div className="mx-6">
-        {blogElements.length > 0 ? (
-          <div className="grid grid-cols-3 gap-4">{blogElements}</div>
-        ) : (
-          <p className="text-center mt-4">You have no blogs yet</p>
-        )}
-      </div>
+      {loading ? (
+        <Loading />
+      ) : (
+        <div className="mx-6">
+          {blogElements.length > 0 ? (
+            <div className="grid grid-cols-3 gap-4">{blogElements}</div>
+          ) : (
+            <p className="text-center mt-4">You have no blogs yet</p>
+          )}
+        </div>
+      )}
     </div>
   ) : (
     <Navigate to="/signIn" />

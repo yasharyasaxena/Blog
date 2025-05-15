@@ -5,6 +5,7 @@ import { AuthContext, EditorContext } from "../App";
 import { createBlog } from "../api";
 import { useNavigate } from "react-router-dom";
 import { EDITOR_JS_TOOLS } from "../components/EditorTools";
+import { toast } from "react-toastify";
 
 export default function PublishForm() {
   let {
@@ -40,12 +41,13 @@ export default function PublishForm() {
       const result = await createBlog(blog, token);
       console.log(result.status);
       if (result.status === 201) {
-        alert(result.message);
+        toast.success(result.message);
         setBlog({ title: "", banner: "", content: [], author: {} });
         setTextEditor({ isReady: false });
         navigate(`/blog/${result.blog}`);
       }
     } catch (error) {
+      toast.error("Error publishing blog");
       console.error(error);
     }
   };

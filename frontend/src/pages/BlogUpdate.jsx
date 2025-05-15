@@ -1,9 +1,11 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router";
-import { getBlog } from "../api";
+import { getBlog, updateBlog } from "../api";
 import { AuthContext, EditorContext } from "../App";
 import EditorJS from "@editorjs/editorjs";
 import { EDITOR_JS_TOOLS } from "../components/EditorTools";
+import Loading from "../components/Loading";
+import { toast } from "react-toastify";
 
 export default function BlogUpdate() {
   const { id } = useParams();
@@ -41,34 +43,20 @@ export default function BlogUpdate() {
     );
   }, [blog]);
 
-  if (loading) {
-    return <h1>Loading...</h1>;
-  }
-
-  if (error) {
-    return <h1>{error.message}</h1>;
-  }
-
   const handleUpdate = async () => {
     if (!display) return;
     try {
       const outputData = await display.save();
       const updatedBlog = { ...blog, content: outputData };
+      setLoading(true);
       setBlog(updatedBlog);
 
-      const response = await fetch(`http://localhost:3000/blog-edit/${id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(updatedBlog),
-      });
-
+      const response = await updateBlog(updatedBlog, token);
       const data = await response.json();
       if (response.ok) {
         navigate("/blog/" + id + "?updated=true");
       } else {
+        toast.error(data.message || "Failed to update the blog");
         throw new Error(data.message || "Failed to update the blog");
       }
     } catch (error) {
@@ -76,7 +64,11 @@ export default function BlogUpdate() {
     }
   };
 
-  return (
+  return loading ? (
+    <Loading />
+  ) : error ? (
+    toast.error(error.message || "Failed to load the blog")
+  ) : (
     <div className="max-w-4xl mx-auto p-4">
       <div className="banner mb-4">
         <img
